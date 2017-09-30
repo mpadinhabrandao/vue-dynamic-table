@@ -1,15 +1,14 @@
 <template>
-    <div :class="Iclass.class">
-        {{Iconfig}}
-        <table :class="Iclass.table.class">
-            <thead :class="Iclass.table.thead.class">
-                <tr :class="Iclass.table.thead.tr.class">
-                    <th v-for="(field, ifield) in Ifields"  :class=" [Iclass.table.thead.tr.th.class,ifield,{ 'col-order' : field.sortable }, (ifield == IorderBy) ? ((Iorder == 'DESC') ? 'desc' : 'asc'): '']" @click="colOrdering(ifield)">
+    <div>
+        <table >
+            <thead >
+                <tr>
+                    <th v-for="(field, ifield) in Ifields"  :class=" [ifield,{ 'col-order' : field.sortable }, (ifield == IorderBy) ? ((Iorder == 'DESC') ? 'desc' : 'asc'): '']" @click="colOrdering(ifield)">
                         {{field.label}}
                     </th>
                 </tr>
-                <tr :class="Iclass.table.thead.tr.class">
-                    <th v-for="(field, ifield) in Ifields" :class=" [Iclass.table.thead.tr.th.class,ifield]">
+                <tr>
+                    <th v-for="(field, ifield) in Ifields" :class=" [ifield]">
                         <template v-if="field.filter">
                             <template v-if="field.filter.slot">
                             <slot :name="field.filter.slot"></slot>
@@ -144,39 +143,6 @@ export default {
             },
             IrowEditable: [],
             rowId: "namespace",
-            Iclass: {
-                class: "",
-                table: {
-                    class: "table table-sm",
-                    thead: {
-                        class: "",
-                        tr: {
-                            class: "",
-                            th: {
-                                class: ""
-                            }
-                        }
-                    },
-                    tbody: {
-                        class: "",
-                        tr: {
-                            class: "",
-                            td: {
-                                class: ""
-                            }
-                        }
-                    },
-                    tfoot: {
-                        class: "",
-                        tr: {
-                            class: "",
-                            td: {
-                                class: ""
-                            }
-                        }
-                    }
-                }
-            }
         }
     },
     mounted() {

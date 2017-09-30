@@ -1,11 +1,3 @@
-/*
-import dynTable from './dyn-table.vue'
-
-exports.install = function(Vue) {
-    Vue.directive('dyn-table', dynTable);
-}
-*/
-//import DynTable from './components/Table.vue';
 import DynTable from './dyn-table.vue'
 
 const DynTablePlugin = {
