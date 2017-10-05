@@ -154,9 +154,9 @@ output
 
 | Prop | Type | Default | Description | 
 | :--- | :--- | :--- | :--- |
-| fields | Object | [more details](#prop-fields) |  |
+| fields | Object | [more details](#propfields) |  |
 | rows | Array | [] | Array with information to list |
-| config | Object | empty [more details](#prop-config) |  |
+| config | Object | empty [more details](#propconfig) |  |
 | rowId | String | '' | field to use as id, you need this to editing inline |
 | checkRows | Boolean | false | set `true` if you need add column with checkbox, this column will be first |
 
@@ -172,8 +172,8 @@ output
 |  |  |  | `hide`: hide column but permite show the column |
 |  |  |  | `none`: hide column and don't permite show the column |
 | slot | String | '' |  if slot not empty then will be used for calling slot with same name as value |
-| editable |  |  | under construction |
-| filter |  |  | under construction |
+| editable |  |  | under construction [more details](#propfieldseditable) |
+| filter |  |  | under construction [more details](#propfieldsfilter) |
 
 #### Prop/Fields/Editable
 #### Prop/Fields/Filter
