@@ -1,0 +1,58 @@
+th.col-order{
+    position: relative
+}
+th.col-order:before,
+th.col-order:after {
+    position: absolute;
+    bottom: .45em;
+    display: block;
+    opacity: .3;
+}
+th.col-order:after {
+    content:'\2193';
+    right: .5em;
+}
+th.col-order:before {
+    content:'\2191';
+    right: 1em;
+}
+th.col-order.asc:before {
+    opacity: 1;
+}
+th.col-order.desc:after {
+    opacity: 1;
+}
+.btn-cell-edit-ok:after {
+    content: '\21B5';
+    cursor: pointer;
+}
+.btn-cell-edit-cancel:after {
+    content: '\2297';
+    cursor: pointer;
+}
+td.cell-edit{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -moz-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -moz-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+.over{
+    background: grey;
+}

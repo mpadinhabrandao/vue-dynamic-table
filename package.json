@@ -1,83 +1,19 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "vue-dynamic-table@0.0.3",
-        "scope": null,
-        "escapedName": "vue-dynamic-table",
-        "name": "vue-dynamic-table",
-        "rawSpec": "0.0.3",
-        "spec": "0.0.3",
-        "type": "version"
-      },
-      "/var/www/html/backoffice/router-app"
-    ]
-  ],
-  "_from": "vue-dynamic-table@0.0.3",
-  "_id": "vue-dynamic-table@0.0.3",
-  "_inCache": true,
-  "_location": "/vue-dynamic-table",
-  "_nodeVersion": "6.11.1",
-  "_npmOperationalInternal": {
-    "host": "s3://npm-registry-packages",
-    "tmp": "tmp/vue-dynamic-table-0.0.3.tgz_1506798890844_0.19149968679994345"
-  },
-  "_npmUser": {
-    "name": "mpadinhabrandao",
-    "email": "mpadinhabrandao@gmail.com"
-  },
-  "_npmVersion": "3.10.10",
-  "_phantomChildren": {},
-  "_requested": {
-    "raw": "vue-dynamic-table@0.0.3",
-    "scope": null,
-    "escapedName": "vue-dynamic-table",
     "name": "vue-dynamic-table",
-    "rawSpec": "0.0.3",
-    "spec": "0.0.3",
-    "type": "version"
-  },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/vue-dynamic-table/-/vue-dynamic-table-0.0.3.tgz",
-  "_shasum": "76c24f7ab9849c48fe6ce5780da3fb98fb372903",
-  "_shrinkwrap": null,
-  "_spec": "vue-dynamic-table@0.0.3",
-  "_where": "/var/www/html/backoffice/router-app",
-  "author": {
-    "name": "Márcio Padinha Brandão"
-  },
-  "bugs": {
-    "url": "https://github.com/mpadinhabrandao/vue-dynamic-table/issues"
-  },
-  "dependencies": {},
-  "description": "",
-  "devDependencies": {},
-  "directories": {},
-  "dist": {
-    "shasum": "76c24f7ab9849c48fe6ce5780da3fb98fb372903",
-    "tarball": "https://registry.npmjs.org/vue-dynamic-table/-/vue-dynamic-table-0.0.3.tgz"
-  },
-  "homepage": "https://github.com/mpadinhabrandao/vue-dynamic-table#readme",
-  "license": "MIT",
-  "main": "index.js",
-  "maintainers": [
-    {
-      "name": "mpadinhabrandao",
-      "email": "mpadinhabrandao@gmail.com"
-    }
-  ],
-  "name": "vue-dynamic-table",
-  "optionalDependencies": {},
-  "readme": "ERROR: No README data found!",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mpadinhabrandao/vue-dynamic-table.git"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "version": "0.0.3"
+    "version": "0.0.4",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mpadinhabrandao/vue-dynamic-table.git"
+    },
+    "author": "Marcio Padinha Brandao"
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/mpadinhabrandao/vue-dynamic-table/issues"
+    },
+    "homepage": "https://github.com/mpadinhabrandao/vue-dynamic-table#readme"
 }
