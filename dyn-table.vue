@@ -1,25 +1,43 @@
 <template>
     <div>
+    {{IcheckedRows}}
         <table >
             <thead >
                 <tr>
-                    <th v-for="(field, ifield) in Ifields"  :class=" [ifield,{ 'col-order' : field.sortable }, (ifield == IorderBy) ? ((Iorder == 'DESC') ? 'desc' : 'asc'): '']" @click="colOrdering(ifield)">
-                        {{field.label}}
+                    <th v-if="checkRows">
+                        <input type="checkbox" :checked="IcheckedRowsToggle" @change="IcheckedRowsToggle = !IcheckedRowsToggle" />
                     </th>
+                    <template v-for="ifield in IshowFields" >
+                        <th 
+                            :class=" [ifield,{ 'col-order' : Ifields[ifield].sortable }, (ifield == IorderBy) ? ((Iorder == 'DESC') ? 'desc' : 'asc'): '']" 
+                            :data-key="ifield"
+                            @click="colOrdering(ifield)"
+                            draggable="true"
+                            @dragstart="handleDragStart"
+                            @dragenter="handleDragEnter"
+                            @dragover="handleDragOver"
+                            @dragleave="handleDragLeave"
+                            @drop="handleDrop"
+                            @dragend="handleDragEnd"
+                        >
+                            {{Ifields[ifield].label}}
+                        </th>
+                    </template>
                 </tr>
                 <tr>
-                    <th v-for="(field, ifield) in Ifields" :class=" [ifield]">
-                        <template v-if="field.filter">
-                            <template v-if="field.filter.slot">
-                            <slot :name="field.filter.slot"></slot>
+                    <th v-if="checkRows"></th>
+                    <th v-for="ifield in IshowFields" :class=" [ifield]">
+                        <template v-if="Ifields[ifield].filter">
+                            <template v-if="Ifields[ifield].filter.slot">
+                                <slot :name="Ifields[ifield].filter.slot"></slot>
                             </template>
-                            <template v-else-if="field.filter == true || field.filter.type == 'input'">
-                                <input :placeholder="field.filter.placeholder" type="text" v-model="IfilterValues[ifield]" v-on:change="calcRows" />
+                            <template v-else-if="Ifields[ifield].filter == true || Ifields[ifield].filter.type == 'input'">
+                                <input :placeholder="Ifields[ifield].filter.placeholder" type="text" v-model="IfilterValues[ifield]" v-on:change="calcRows" />
                             </template>
-                            <template v-else-if="field.filter.type == 'select'">
+                            <template v-else-if="Ifields[ifield].filter.type == 'select'">
                                 <select v-model="IfilterValues[ifield]" v-on:change="calcRows">
                                     <option value=""></option>
-                                    <option v-for="(oName, oKey) in field.filter.options" :value="oKey">{{oName}}</option>
+                                    <option v-for="(oName, oKey) in Ifields[ifield].filter.options" :value="oKey">{{oName}}</option>
                                 </select>
                             </template>
                         </template>
@@ -27,22 +45,36 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(row,index) in Irows">
-                    <template v-for="(item, key) in Ifields">
-                        <template v-if="item.editable && IrowEditable[row[rowId]] && IrowEditable[row[rowId]][key]">
-                            <td :key="key" >
-                                <input type="text"  v-model="row[key]" v-on:change="cellCange" :data-row-id="row[rowId]" :data-field="key" />
-                                <input type="button" v-on:click="cancelChange" />
+                <tr v-for="(row,index) in Irows" :class="[(IcheckedRows.indexOf(index) >= 0) ? 'check-row' :'' ]">
+                    <td v-if="checkRows">
+                        <input type="checkbox" v-model="IcheckedRows" :value="index"/>
+                    </td>
+                    <template v-for="ifield in IshowFields">
+                        <template v-if="Ifields[ifield].editable && IrowEditable[row[rowId]] && IrowEditable[row[rowId]][ifield]">
+                            <td v-if="Ifields[ifield].editable.slot" class="cell-edit">
+                                <slot :name="Ifields[ifield].filter.slot"></slot>
+                            </td>
+                            <td v-else :key="ifield" class="cell-edit" >
+                                <input 
+                                    type="text"  
+                                    class="cell-edit-input"
+                                    :value="row[ifield]" 
+                                    :data-row-id="row[rowId]" 
+                                    :data-field="ifield" 
+                                    :data-index="index" 
+                                />
+                                <div class="btn-cell-edit-ok" :click="cellChangeSave" ></div>
+                                <div class="btn-cell-edit-cancel" :click="cellChangeCancel"></div>
                             </td>
                         </template>
                         <template v-else >
-                            <td v-if="$scopedSlots[key]" :class="key">
-                                <slot :name="key" :value="row[key]" :item="row" :index="index"></slot>
+                            <td v-if="Ifields[ifield].slot" :class="ifield">
+                                <slot :name="Ifields[ifield].slot" :value="row[ifield]" :item="row" :index="index"></slot>
                             </td>
                             <td v-else
-                                :key="key"
-                                v-html="row[key]"
-                                @dblclick="editCell(row[rowId],key)"
+                                :key="ifield"
+                                v-html="row[ifield]"
+                                @dblclick="editCell(row[rowId],ifield, index)"
                             ></td>
                         </template>
                     </template>
@@ -84,12 +116,7 @@
 </template>
 
 <script>
-
-
 export default {
-    updated() {
-        //console.log(this);
-    },
     props: {
         fields: Object,
         rows: Array,
@@ -115,8 +142,13 @@ export default {
         },
         config: {
             type: Object,
-            default: {}
-        }
+            //default: {}
+            default() {return {}}
+        },
+        rowId: {
+            type: String,
+        },
+        checkRows: Boolean,
         
          
     },
@@ -133,6 +165,8 @@ export default {
             IorderBy: this.orderBy || '',
             Iorder: this.IorderBy  || '',
             IshowFields:[],
+            IcheckedRowsToggle: false,
+            IcheckedRows:[],
             Iconfig: this.config || {
                 IfilterValues:{},
                 IshowFields:[],
@@ -142,7 +176,7 @@ export default {
                 Ipage: this.page || 1
             },
             IrowEditable: [],
-            rowId: "namespace",
+            IcolumnInMove: '',
         }
     },
     mounted() {
@@ -155,20 +189,82 @@ export default {
         this.calcFields()
         this.calcRows()
     },
-    computed: {
-    },
     methods:{
-        editCell(rowId,key){
+        handleDragStart(e) {
+            //e.target.style.opacity = '0.4';  // this / e.target is the source node.
+            e.target.classList.add('item-drag');
+            this.IcolumnInMove = e.target.dataset.key;  // See the section on the DataTransfer object.
+        },
+        handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault(); // Necessary. Allows us to drop.
+            }
+            
+            e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
+            return false;
+        },
+        handleDragEnter(e) {
+            // this / e.target is the current hover target.
+            e.target.classList.add('over');
+        },
+        handleDragLeave(e) {
+            e.target.classList.remove('over');  // this / e.target is previous target element.
+        },
+        handleDrop(e) {
+            //ONDE SE LARGA
+            console.log(e);
+            // this / e.target is current target element.
+
+            if (e.stopPropagation) {
+                e.stopPropagation(); // stops the browser from redirecting.
+            }
+
+            // See the section on the DataTransfer object.
+            console.log("coloca o: " + this.IcolumnInMove + " depois de: "+ e.target.dataset.key);
+            this.reorderFields(this.IcolumnInMove, e.target.dataset.key);
+            return false;
+        },
+        handleDragEnd(e) {
+            //QUANDO LARGADO
+            // this/e.target is the source node.
+            e.target.classList.remove('item-drag');
+            var  cols = e.target.parentNode.querySelectorAll('th.over');
+            [].forEach.call(cols, function (col) {
+                col.classList.remove('over');
+            });
+        },
+        checkedRowsToggle(){
+            if(this.IcheckedRowsToggle){
+                this.IcheckedRows = Object.keys(this.Irows)
+            }else{
+                this.IcheckedRows = []
+            }
+        },
+        editCell(rowId,key,index){
             this.IrowEditable[rowId] = [];
             this.IrowEditable[rowId][key]= true;
+            this.IcheckedRows = [index];
             this.$forceUpdate();
         },
-        cellCange(evnt){
+        cellChangeCancel(evnt){
             var rowId = evnt.target.dataset.rowId;
-            var field = evnt.target.dataset.field
-            console.log(rowId);
-            console.log(field);
-            console.log(evnt.target.value);
+            var field = evnt.target.dataset.field;
+            var index = evnt.target.dataset.index;
+            var value = evnt.target.value;
+
+            this.IcheckedRows = [];
+            if(this.Irows[index][this.rowId] == rowId ) this.Irows[index][field] = value;
+            this.IrowEditable[rowId][field] = false;
+            this.$forceUpdate();
+        },
+        cellChangeSave(evnt){
+            var rowId = evnt.target.dataset.rowId;
+            var field = evnt.target.dataset.field;
+            var index = evnt.target.dataset.index;
+            var value = evnt.target.value;
+
+            this.IcheckedRows = [];
+            if(this.Irows[index][this.rowId] == rowId ) this.Irows[index][field] = value;
             this.IrowEditable[rowId][field] = false;
             this.$forceUpdate();
         },
@@ -251,8 +347,22 @@ export default {
                     this.IshowFields.push(name);
                 }
             }
+            console.log('calcBaseShowFields');
+            console.log(this.IshowFields);
         },
-        calcFields(x = false) {
+        reorderFields(field,afterField) {
+            var index_field = this.IshowFields.indexOf(field);
+            var index_afterField = this.IshowFields.indexOf(afterField);
+            if (index_field >= 0) {
+                this.IshowFields.splice(index_field, 1);
+                this.IshowFields.splice(index_afterField , 0,field);
+            }
+
+            this.calcFields();
+            this.$forceUpdate();
+            
+        },
+        calcFields() {
             var tmp = {};
             this.Iconfig.IshowFields = this.IshowFields;
             for (var name in this.fields) {
@@ -324,6 +434,9 @@ export default {
         IshowFields(){
             this.calcFields()
             this.$forceUpdate();
+        },
+        IcheckedRowsToggle() {
+            this.checkedRowsToggle()
         }
     }
 }
@@ -352,5 +465,39 @@ th.col-order.asc:before {
 }
 th.col-order.desc:after {
     opacity: 1;
+}
+.btn-cell-edit-ok:after {
+    content: '\21B5';
+    cursor: pointer;
+}
+.btn-cell-edit-cancel:after {
+    content: '\2297';
+    cursor: pointer;
+}
+td.cell-edit{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -moz-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -moz-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+.over{
+    background: grey;
 }
 </style>
