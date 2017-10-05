@@ -154,13 +154,35 @@ output
 
 | Prop | Type | Default | Description | 
 | :--- | :--- | :--- | :--- |
-| fields        | Object        | [more details](#fiels) |  |
-| rows          | Array      | [] | Array with information to list |
+| fields | Object | [more details](#prop-fields) |  |
+| rows | Array | [] | Array with information to list |
+| config | Object | empty [more details](#prop-config) |  |
+| rowId | String | '' | field to use as id, you need this to editing inline |
+| checkRows | Boolean | false | set `true` if you need add column with checkbox, this column will be first |
+
+
+#### Prop/Fields
+| Prop | Type | Default | Description | 
+| :--- | :--- | :--- | :--- |
+| label | String | '' |  |
+| sortable | Boolean |  |  |
+| status | String | '' | if status is empty then column is shown. status can be : | 
+|  |  |  | `fixed`: show column and don't permite hide the column |
+|  |  |  | `show`: show column and permite hide the column |
+|  |  |  | `hide`: hide column but permite show the column |
+|  |  |  | `none`: hide column and don't permite show the column |
+| slot | String | '' |  if slot not empty then will be used for calling slot with same name as value |
+| editable |  |  | under construction |
+| filter |  |  | under construction |
+
+#### Prop/Fields/Editable
+#### Prop/Fields/Filter
+
+#### Prop/Config
+| Prop | Type | Default | Description | 
+| :--- | :--- | :--- | :--- |
 | page | Number | 1 | numero da pagina |
-| perPageOptions | Array | [5,10,25,50,100] |  |
+| perPageOptions | Array | [5,10,25,50,100] | options to items per page |
 | perPage | Number | first of list `perPageOptions` or max of rows if `perPageOptions` is empty | number of item per page |
-| orderBy | String | '' |  |
+| orderBy | String | '' | files |
 | order | String | '' |  |
-| config | Object | empty |  |
-| rowId | String | '' |  |
-| checkRows | Boolean | false |  |
