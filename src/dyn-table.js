@@ -160,7 +160,7 @@ export default {
                                     itemOK++;
                                 }
                             }else{
-                                if (Ifields[index].filter === true || Ifields[index].filter.logic == 'like'){
+                                if (Ifields[index].filter === true || Ifields[index].filter.logic == 'regex'){
                                     if (IfilterValues[index] instanceof RegExp) {
                                         var regex = IfilterValues[index];
                                     } else {
