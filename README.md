@@ -230,7 +230,7 @@ fields: {
 
 ### Pagination
 Use parameters `perPage`, to do limit number items per page.
-Automatically, insert selectbox with de page.
+Automatically, will be insert selectbox with the pages.
 ``` html
 <template>
     <div>
@@ -246,7 +246,8 @@ Automatically, insert selectbox with de page.
 ![](https://raw.githubusercontent.com/mpadinhabrandao/vue-dynamic-table/work-in-documentation/docs/images/img5.png)
 
 ### Items per page
-
+With attribute `perPageOptions` you can defined items per page and override `perPage`. 
+Automatically, will be insert selectbox with de options `perPageOptions` and if `perPage` exists in perPageOptions then option with same value is selected.
 
 ``` html
 <template>
