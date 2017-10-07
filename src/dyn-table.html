@@ -10,7 +10,7 @@
                             :class=" [ifield,{ 'col-order' : Ifields[ifield].sortable }, (ifield == IorderBy) ? ((Iorder == 'DESC') ? 'desc' : 'asc'): '']" 
                             :data-key="ifield"
                             @click="colOrdering(ifield)"
-                            draggable="true"
+                            :draggable="dragColumn"
                             @dragstart="handleDragStart"
                             @dragenter="handleDragEnter"
                             @dragover="handleDragOver"
