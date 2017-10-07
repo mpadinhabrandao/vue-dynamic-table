@@ -31,6 +31,7 @@ export default {
             type: String,
         },
         checkRows: Boolean,
+        dragColumn: Boolean,
     },
     data() {
         return {
