@@ -10,6 +10,7 @@ Controção de tabelas
     * [Order Columns](#order-columns)
     * [Filter by column](#filter-by-column)
     * [Pagination](#pagination)
+    * [Items per page](#items-per-page)
 * [Props](#props)
 
 ### Installation
@@ -243,6 +244,24 @@ Automatically, insert selectbox with de page.
 </template>
 ```
 ![](https://raw.githubusercontent.com/mpadinhabrandao/vue-dynamic-table/work-in-documentation/docs/images/img5.png)
+
+### Items per page
+
+
+``` html
+<template>
+    <div>
+        <dyn-table 
+            :fields="fields"
+            :rows="rows"
+            :perPage="5"
+            :perPageOptions="[3,5,10]"
+        >
+        </dyn-table>  
+    </div>
+</template>
+```
+![](https://raw.githubusercontent.com/mpadinhabrandao/vue-dynamic-table/work-in-documentation/docs/images/img6.png)
 
 #### Props
 
