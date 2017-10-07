@@ -244,7 +244,7 @@ export default {
                     if( info.hasOwnProperty('status') ){
                         if( info.status == 'none' ){
                             continue;
-                        }else if( info.status == 'fix' ){
+                        }else if( info.status == 'fixed' ){
                             tmp[name] = info;
                         }
                     }
