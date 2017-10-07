@@ -8,6 +8,7 @@ Controção de tabelas
 * [Basic examples](#basic-examples)
     * [Sort](#sort)
     * [Order Columns](#order-columns)
+    * [Filter by column](#filter-by-column)
 * [Props](#props)
 
 ### Installation
@@ -172,7 +173,57 @@ output
 
 ![](https://raw.githubusercontent.com/mpadinhabrandao/vue-dynamic-table/work-in-documentation/docs/images/img3.png)
 
+### Filter by column 
+To use the filter in column, just pass the "filter" property in the fields.
+if value of filter is true, create a input text and conditions is *%like%* or if input value is regex contition is regex (you can see example in column e-mail).
+Or pass the object with structure:
+``` javascript
+//...
+filter: {
+    type: 'input', // OR 'select'
+    logic : 'regex', // OR 'equal'
+    // only need proprety options if type is select 
+    options: {
+      //value: text
+      'opt1': 'Option 1',
+      'opt2': 'Option 2',
+    }
+}
+//...
+```
 
+``` javascript
+//...
+fields: {
+    name: {
+        label: 'Name',
+    },
+    email:{
+        label: 'E-mail',
+        filter: true,
+    },
+    age: {
+        label: 'Age',  
+        filter: {
+            type: 'input',
+            logic : 'equal'
+        }
+    },
+    gender: {
+        label: 'Gender',  
+        filter: {
+            type: 'input',
+            logic : 'equal'
+            options: {
+               'male': 'Male',
+               'female': 'Female',
+            }
+        }  
+    },
+},
+//...
+```
+![](https://raw.githubusercontent.com/mpadinhabrandao/vue-dynamic-table/work-in-documentation/docs/images/img4.png)
 
 
 #### Props
