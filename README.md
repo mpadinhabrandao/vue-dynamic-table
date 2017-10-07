@@ -7,6 +7,7 @@ Controção de tabelas
 * [Usage](#usage)
 * [Basic examples](#basic-examples)
     * [Sort](#sort)
+    * [Order Columns](#order-columns)
 * [Props](#props)
 
 ### Installation
@@ -149,6 +150,30 @@ fields: {
 output
 
 ![](https://raw.githubusercontent.com/mpadinhabrandao/vue-dynamic-table/master/docs/images/img2.png)
+
+
+### Order Columns
+you can reorder the columns with drag-and-drop. To do this, you need add paramamter `dragColumn`.
+
+``` html
+<template>
+    <div>
+        <dyn-table 
+            :fields="fields"
+            :rows="rows"
+            dragColumn
+        >
+        </dyn-table>  
+    </div>
+</template>
+```
+
+output
+
+![](https://raw.githubusercontent.com/mpadinhabrandao/vue-dynamic-table/work-in-documentation/docs/images/img3.png)
+
+
+
 
 #### Props
 
