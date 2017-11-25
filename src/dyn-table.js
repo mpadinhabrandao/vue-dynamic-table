@@ -8,11 +8,11 @@ export default {
         },
         perPage: {
             type: Number,
-            default: 10
+            default: 0
         },
         perPageOptions: {
             type: Array,
-            default() {return [5,10,25,50,100]}
+            default() {return []}
         },
         orderBy: {
             type: String,
@@ -21,6 +21,10 @@ export default {
         order: {
             type: String,
             default: ''
+        },
+        scopedSlotsParent: {
+            type: Object,
+            default() {return {}}
         },
         config: {
             type: Object,
@@ -35,9 +39,9 @@ export default {
     },
     data() {
         return {
-            IperPage: this.perPage || 10,
+            IperPage: this.perPage || 0,
             Ipage: this.page || 1,
-            IperPageOptions: this.perPageOptions || [10,25,50,100],
+            IperPageOptions: this.perPageOptions || [],
             Ifields: this.fields || {},
             Irows: this.rows || [],
             ItotalPages: 0,
@@ -58,6 +62,7 @@ export default {
             },
             IrowEditable: [],
             IcolumnInMove: '',
+            time_calcRows: '',
         }
     },
     mounted() {
@@ -194,6 +199,10 @@ export default {
             }.bind(null, orderBy, order) ); 
             
         },
+        _calcRows() {
+            clearTimeout(this.time_calcRows);
+            this.time_calcRows = setTimeout(this.calcRows, 300);
+        },
         calcRows() {
             self = this;
             self.Iconfig.IfilterValues = this.IfilterValues;
@@ -206,8 +215,10 @@ export default {
             tmp = self.filterRows(tmp, this.IfilterValues, this.Ifields);
             self.orderRows(tmp, self.IorderBy, self.Iorder);
             this.ItotalRows = tmp.length;
-            this.ItotalPages = Math.ceil(this.ItotalRows / this.IperPage);
-            var tmp = (typeof tmp != 'undefined') ? tmp.slice((this.Ipage - 1) * this.IperPage, Number((this.Ipage) * this.IperPage)) : [];
+            if( this.IperPage ){
+                this.ItotalPages = Math.ceil(this.ItotalRows / this.IperPage);
+                var tmp = (typeof tmp != 'undefined') ? tmp.slice((this.Ipage - 1) * this.IperPage, Number((this.Ipage) * this.IperPage)) : [];
+            }
             return this.Irows = tmp;
         },
         calcBaseShowFields() {
