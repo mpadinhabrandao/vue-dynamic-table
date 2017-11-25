@@ -1,6 +1,6 @@
 {
     "name": "vue-dynamic-table",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "",
     "main": "index.js",
     "scripts": {
@@ -10,7 +10,7 @@
         "type": "git",
         "url": "git+https://github.com/mpadinhabrandao/vue-dynamic-table.git"
     },
-    "author": "Marcio Padinha Brandao"
+    "author": "Marcio Padinha Brandao",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/mpadinhabrandao/vue-dynamic-table/issues"
